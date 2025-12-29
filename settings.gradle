@@ -1,3 +1,11 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+    }
+}
+
+include 'api'
+include 'util'
 include 'product-service'
 include 'review-service'
 include 'recommendation-service'
