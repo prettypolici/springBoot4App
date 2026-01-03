@@ -19,8 +19,12 @@ repositories {
 }
 
 dependencies {
+	implementation project(':api')
+	implementation project(':util')
+
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation("org.projectlombok:lombok:1.18.42")
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
