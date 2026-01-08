@@ -66,7 +66,7 @@ class ProductCompositeServiceApplicationTests {
       .jsonPath("$.reviews.length()").isEqualTo(1);
   }
 
-//  @Test
+  @Test
   public void getProductNotFound() {
     client.get()
       .uri("/product-composite/" + PRODUCT_ID_NOT_FOUND)
@@ -77,7 +77,7 @@ class ProductCompositeServiceApplicationTests {
       .expectBody()
       .jsonPath("$.path").isEqualTo("/product-composite/" +
         PRODUCT_ID_NOT_FOUND)
-      .jsonPath("$.message").isEqualTo("NOT FOUND: " +
+      .jsonPath("$.message").isEqualTo("NOT FOUND:" +
         PRODUCT_ID_NOT_FOUND);
   }
 }
