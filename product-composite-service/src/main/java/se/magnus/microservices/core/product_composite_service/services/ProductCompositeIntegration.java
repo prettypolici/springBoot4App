@@ -64,7 +64,7 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
             LOG.debug("Will call getProduct API on URL: {}", url);
 
             Product product = restTemplate.getForObject(url, Product.class);
-            LOG.debug("Found a product with id: {}", product.productId());
+            LOG.debug("Found a product with id: {}", product.getProductId());
 
             return product;
 
@@ -83,6 +83,16 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
                     throw ex;
             }
         }
+    }
+
+    @Override
+    public Product createProduct(Product body) {
+        return null;
+    }
+
+    @Override
+    public void deleteProduct(int productId) {
+
     }
 
     private String getErrorMessage(HttpClientErrorException ex) {
