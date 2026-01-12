@@ -11,6 +11,7 @@ ext {
 }
 dependencies {
     implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+
     implementation("org.projectlombok:lombok:1.18.42")
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springdoc:springdoc-openapi-starter-common:2.8.6'

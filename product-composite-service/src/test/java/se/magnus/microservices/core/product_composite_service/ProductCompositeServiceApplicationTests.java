@@ -31,11 +31,9 @@ class ProductCompositeServiceApplicationTests {
   private static final int PRODUCT_ID_NOT_FOUND = 2;
   private static final int PRODUCT_ID_INVALID = 3;
 
-  @Autowired
-  private WebTestClient client;
+  @Autowired private WebTestClient client;
 
-  @MockitoBean
-  private ProductCompositeIntegration compositeIntegration;
+  @MockitoBean private ProductCompositeIntegration compositeIntegration;
 
   @BeforeEach
   void setUp() {
