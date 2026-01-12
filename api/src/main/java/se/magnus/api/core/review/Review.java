@@ -1,9 +1,42 @@
 package se.magnus.api.core.review;
 
-public record Review(int productId,
-                     int reviewId,
-                     String author,
-                     String subject,
-                     String content,
-                     String serviceAddress) {
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
+public class Review {
+
+  private int productId;
+  private int reviewId;
+  private String author;
+  private String subject;
+  private String content;
+  private String serviceAddress;
+
+  public Review() {
+    productId = 0;
+    reviewId = 0;
+    author = null;
+    subject = null;
+    content = null;
+    serviceAddress = null;
+  }
+
+  public Review(
+    int productId,
+    int reviewId,
+    String author,
+    String subject,
+    String content,
+    String serviceAddress) {
+
+    this.productId = productId;
+    this.reviewId = reviewId;
+    this.author = author;
+    this.subject = subject;
+    this.content = content;
+    this.serviceAddress = serviceAddress;
+  }
+
 }
