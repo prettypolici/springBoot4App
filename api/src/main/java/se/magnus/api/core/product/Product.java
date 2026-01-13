@@ -3,8 +3,6 @@ package se.magnus.api.core.product;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
-@Getter
 public class Product {
 
   private int productId;
@@ -24,5 +22,37 @@ public class Product {
     name = null;
     weight = 0;
     serviceAddress = null;
+  }
+
+  public int getProductId() {
+    return productId;
+  }
+
+  public void setProductId(int productId) {
+    this.productId = productId;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public int getWeight() {
+    return weight;
+  }
+
+  public void setWeight(int weight) {
+    this.weight = weight;
+  }
+
+  public String getServiceAddress() {
+    return serviceAddress;
+  }
+
+  public void setServiceAddress(String serviceAddress) {
+    this.serviceAddress = serviceAddress;
   }
 }

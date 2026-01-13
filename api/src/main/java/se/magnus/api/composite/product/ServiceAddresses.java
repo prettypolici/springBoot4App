@@ -1,8 +1,5 @@
 package se.magnus.api.composite.product;
 
-import lombok.Getter;
-
-@Getter
 public class ServiceAddresses {
   private String cmp;
   private String pro;
@@ -21,5 +18,21 @@ public class ServiceAddresses {
     this.pro = null;
     this.rev = null;
     this.rec = null;
+  }
+
+  public String getCmp() {
+    return cmp;
+  }
+
+  public String getPro() {
+    return pro;
+  }
+
+  public String getRev() {
+    return rev;
+  }
+
+  public String getRec() {
+    return rec;
   }
 }

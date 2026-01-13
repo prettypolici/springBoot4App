@@ -1,8 +1,5 @@
 package se.magnus.api.composite.product;
 
-import lombok.Getter;
-
-@Getter
 public class RecommendationSummary {
 
   private final int recommendationId;
@@ -24,4 +21,19 @@ public class RecommendationSummary {
     this.content = content;
   }
 
+  public int getRecommendationId() {
+    return recommendationId;
+  }
+
+  public String getAuthor() {
+    return author;
+  }
+
+  public int getRate() {
+    return rate;
+  }
+
+  public String getContent() {
+    return content;
+  }
 }

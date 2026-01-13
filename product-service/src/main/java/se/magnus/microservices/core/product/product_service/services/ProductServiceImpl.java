@@ -18,40 +18,52 @@ public class ProductServiceImpl implements ProductService {
   private static final Logger LOG = LoggerFactory.getLogger(ProductServiceImpl.class);
 
   private final ServiceUtil serviceUtil;
+
   private final ProductRepository repository;
-  private final ProductMapper productMapper;
 
-  public ProductServiceImpl(ServiceUtil serviceUtil, ProductRepository repository, ProductMapper productMapper) {
-    this.serviceUtil = serviceUtil;
+  private final ProductMapper mapper;
+
+  public ProductServiceImpl(ProductRepository repository, ProductMapper mapper, ServiceUtil serviceUtil) {
     this.repository = repository;
-    this.productMapper = productMapper;
-  }
-
-  @Override
-  public Product getProduct(int productId) {
-    if(productId < 1) throw new InvalidInputException("Invalid product id: " + productId);
-
-    ProductEntity entity = repository.findByProductId(productId)
-      .orElseThrow(() -> new NotFoundException("No product found for productId: " + productId));
-
-    Product response = productMapper.entityToApi(entity);
-    response.setServiceAddress(serviceUtil.getServiceAddress());
-    return response;
+    this.mapper = mapper;
+    this.serviceUtil = serviceUtil;
   }
 
   @Override
   public Product createProduct(Product body) {
     try {
-      ProductEntity entity = productMapper.apiToEntity(body);
+      ProductEntity entity = mapper.apiToEntity(body);
       ProductEntity newEntity = repository.save(entity);
-      return productMapper.entityToApi(newEntity);
+
+      LOG.debug("createProduct: entity created for productId: {}", body.getProductId());
+      return mapper.entityToApi(newEntity);
+
     } catch (DuplicateKeyException dke) {
-      throw new InvalidInputException("Duplicate key, Product ID: " + body.getProductId());
+      throw new InvalidInputException("Duplicate key, Product Id: " + body.getProductId());
     }
   }
 
   @Override
+  public Product getProduct(int productId) {
+
+    if (productId < 1) {
+      throw new InvalidInputException("Invalid productId: " + productId);
+    }
+
+    ProductEntity entity = repository.findByProductId(productId)
+      .orElseThrow(() -> new NotFoundException("No product found for productId: " + productId));
+
+    Product response = mapper.entityToApi(entity);
+    response.setServiceAddress(serviceUtil.getServiceAddress());
+
+    LOG.debug("getProduct: found productId: {}", response.getProductId());
+
+    return response;
+  }
+
+  @Override
   public void deleteProduct(int productId) {
+    LOG.debug("deleteProduct: tries to delete an entity with productId: {}", productId);
     repository.findByProductId(productId).ifPresent(repository::delete);
   }
 }
