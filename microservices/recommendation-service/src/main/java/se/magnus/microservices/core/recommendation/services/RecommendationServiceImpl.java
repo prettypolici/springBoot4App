@@ -1,7 +1,6 @@
 package se.magnus.microservices.core.recommendation.services;
 
-import java.util.List;
-import java.util.logging.Level;
+import static java.util.logging.Level.FINE;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +14,6 @@ import se.magnus.api.exceptions.InvalidInputException;
 import se.magnus.microservices.core.recommendation.persistence.RecommendationEntity;
 import se.magnus.microservices.core.recommendation.persistence.RecommendationRepository;
 import se.magnus.util.http.ServiceUtil;
-
-import static java.util.logging.Level.FINE;
 
 @RestController
 public class RecommendationServiceImpl implements RecommendationService {

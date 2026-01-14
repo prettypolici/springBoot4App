@@ -1,4 +1,3 @@
-
 package se.magnus.microservices.core.review.services;
 
 import static java.util.logging.Level.FINE;
@@ -95,7 +94,9 @@ public class ReviewServiceImpl implements ReviewService {
       throw new InvalidInputException("Invalid productId: " + productId);
     }
 
-    return Mono.fromRunnable(() -> internalDeleteReviews(productId)).subscribeOn(jdbcScheduler).then();
+    return Mono.fromRunnable(() -> internalDeleteReviews(productId))
+      .subscribeOn(jdbcScheduler)
+      .then();
   }
 
   private void internalDeleteReviews(int productId) {

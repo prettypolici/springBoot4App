@@ -1,3 +1,4 @@
+
 package se.magnus.microservices.core.product.services;
 
 import static java.util.logging.Level.FINE;
@@ -40,12 +41,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     ProductEntity entity = mapper.apiToEntity(body);
-    return repository.save(entity)
+    Mono<Product> newEntity = repository.save(entity)
       .log(LOG.getName(), FINE)
       .onErrorMap(
         DuplicateKeyException.class,
         ex -> new InvalidInputException("Duplicate key, Product Id: " + body.getProductId()))
       .map(e -> mapper.entityToApi((ProductEntity) e));
+
+    return newEntity;
   }
 
   @Override
