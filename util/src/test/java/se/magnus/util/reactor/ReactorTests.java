@@ -7,9 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-
-public class ReactorTests {
+class ReactorTests {
 
   @Test
   void testFlux() {
@@ -20,7 +18,7 @@ public class ReactorTests {
       .filter(n -> n % 2 == 0)
       .map(n -> n * 2)
       .log()
-      .subscribe(list::add);
+      .subscribe(n -> list.add(n));
 
     assertThat(list).containsExactly(4, 8);
   }
@@ -36,5 +34,4 @@ public class ReactorTests {
 
     assertThat(list).containsExactly(4, 8);
   }
-
 }

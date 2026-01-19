@@ -1,4 +1,3 @@
-
 package se.magnus.api.event;
 
 import static java.time.ZonedDateTime.now;

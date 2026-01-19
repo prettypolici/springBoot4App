@@ -1,4 +1,3 @@
-
 package se.magnus.microservices.core.recommendation;
 
 import static org.junit.jupiter.api.Assertions.*;

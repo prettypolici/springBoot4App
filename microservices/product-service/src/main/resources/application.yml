@@ -46,7 +46,6 @@ logging:
 
 management.endpoint.health.show-details: "ALWAYS"
 management.endpoints.web.exposure.include: "*"
-
 ---
 spring.config.activate.on-profile: docker
 
@@ -59,7 +58,6 @@ spring.rabbitmq.host: rabbitmq
 spring.cloud.stream.kafka.binder.brokers: kafka
 
 ---
-
 spring.config.activate.on-profile: streaming_partitioned
 
 spring.cloud.stream.bindings.messageProcessor-in-0.consumer:

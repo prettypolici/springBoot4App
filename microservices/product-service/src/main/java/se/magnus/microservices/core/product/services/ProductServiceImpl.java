@@ -1,4 +1,3 @@
-
 package se.magnus.microservices.core.product.services;
 
 import static java.util.logging.Level.FINE;
@@ -46,7 +45,7 @@ public class ProductServiceImpl implements ProductService {
       .onErrorMap(
         DuplicateKeyException.class,
         ex -> new InvalidInputException("Duplicate key, Product Id: " + body.getProductId()))
-      .map(e -> mapper.entityToApi((ProductEntity) e));
+      .map(e -> mapper.entityToApi(e));
 
     return newEntity;
   }
@@ -63,8 +62,8 @@ public class ProductServiceImpl implements ProductService {
     return repository.findByProductId(productId)
       .switchIfEmpty(Mono.error(new NotFoundException("No product found for productId: " + productId)))
       .log(LOG.getName(), FINE)
-      .map(mapper::entityToApi)
-      .map(this::setServiceAddress);
+      .map(e -> mapper.entityToApi(e))
+      .map(e -> setServiceAddress(e));
   }
 
   @Override
@@ -75,10 +74,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     LOG.debug("deleteProduct: tries to delete an entity with productId: {}", productId);
-    return repository.findByProductId(productId)
-      .log(LOG.getName(), FINE)
-      .map(e -> repository.delete(e))
-      .flatMap(e -> e);
+    return repository.findByProductId(productId).log(LOG.getName(), FINE).map(e -> repository.delete(e)).flatMap(e -> e);
   }
 
   private Product setServiceAddress(Product e) {

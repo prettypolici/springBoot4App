@@ -24,12 +24,11 @@ class PersistenceTests extends MongoDbTestBase {
 
   @BeforeEach
   void setupDb() {
-    repository.deleteAll();
+    repository.deleteAll().block();
 
     RecommendationEntity entity = new RecommendationEntity(1, 2, "a", 3, "c");
     savedEntity = repository.save(entity).block();
 
-    assertNotNull(savedEntity);
     assertEqualsRecommendation(entity, savedEntity);
   }
 
@@ -38,13 +37,12 @@ class PersistenceTests extends MongoDbTestBase {
   void create() {
 
     RecommendationEntity newEntity = new RecommendationEntity(1, 3, "a", 3, "c");
-    repository.save(newEntity);
+    repository.save(newEntity).block();
 
     RecommendationEntity foundEntity = repository.findById(newEntity.getId()).block();
-    assertNotNull(foundEntity);
     assertEqualsRecommendation(newEntity, foundEntity);
 
-    assertEquals(2, repository.count());
+    assertEquals(2, (long)repository.count().block());
   }
 
   @Test

@@ -17,11 +17,16 @@ public class ReviewServiceApplication {
 
   private static final Logger LOG = LoggerFactory.getLogger(ReviewServiceApplication.class);
 
-  @Value("${app.threadPoolSize:10}")
-  private Integer threadPoolSize;
+  private final Integer threadPoolSize;
+  private final Integer taskQueueSize;
 
-  @Value("${app.taskQueueSize:100}")
-  private Integer taskQueueSize;
+  public ReviewServiceApplication(
+    @Value("${app.threadPoolSize:10}") Integer threadPoolSize,
+    @Value("${app.taskQueueSize:100}") Integer taskQueueSize
+  ) {
+    this.threadPoolSize = threadPoolSize;
+    this.taskQueueSize = taskQueueSize;
+  }
 
   @Bean
   public Scheduler jdbcScheduler() {
@@ -30,10 +35,9 @@ public class ReviewServiceApplication {
   }
 
   public static void main(String[] args) {
-    ConfigurableApplicationContext ctx =
-      SpringApplication.run(ReviewServiceApplication.class, args);
+    ConfigurableApplicationContext ctx = SpringApplication.run(ReviewServiceApplication.class, args);
 
     String mysqlUri = ctx.getEnvironment().getProperty("spring.datasource.url");
-    LOG.info("Connected to MySQL: {}", mysqlUri);
+    LOG.info("Connected to MySQL: " + mysqlUri);
   }
 }

@@ -7,8 +7,6 @@ import static se.magnus.api.event.Event.Type.DELETE;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import java.util.Objects;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -194,7 +192,7 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
 
     WebClientResponseException wcre = (WebClientResponseException)ex;
 
-    switch (Objects.requireNonNull(HttpStatus.resolve(wcre.getStatusCode().value()))) {
+    switch (HttpStatus.resolve(wcre.getStatusCode().value())) {
 
       case NOT_FOUND:
         return new NotFoundException(getErrorMessage(wcre));

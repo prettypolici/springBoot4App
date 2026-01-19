@@ -1,5 +1,6 @@
 package se.magnus.microservices.core.product.services;
 
+import java.util.function.Consumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -8,8 +9,6 @@ import se.magnus.api.core.product.Product;
 import se.magnus.api.core.product.ProductService;
 import se.magnus.api.event.Event;
 import se.magnus.api.exceptions.EventProcessingException;
-
-import java.util.function.Consumer;
 
 @Configuration
 public class MessageProcessorConfig {
@@ -46,7 +45,9 @@ public class MessageProcessorConfig {
           LOG.warn(errorMessage);
           throw new EventProcessingException(errorMessage);
       }
+
       LOG.info("Message processing done!");
+
     };
   }
 }

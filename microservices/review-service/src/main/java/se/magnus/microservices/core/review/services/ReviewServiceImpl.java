@@ -94,9 +94,7 @@ public class ReviewServiceImpl implements ReviewService {
       throw new InvalidInputException("Invalid productId: " + productId);
     }
 
-    return Mono.fromRunnable(() -> internalDeleteReviews(productId))
-      .subscribeOn(jdbcScheduler)
-      .then();
+    return Mono.fromRunnable(() -> internalDeleteReviews(productId)).subscribeOn(jdbcScheduler).then();
   }
 
   private void internalDeleteReviews(int productId) {
