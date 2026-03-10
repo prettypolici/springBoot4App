@@ -60,6 +60,13 @@ dependencyManagement {
     }
 }
 
-tasks.named('test') {
+//a se decomenta cand se foloseste docker desktop
+//tasks.named('test') {
+//    useJUnitPlatform()
+//}
+
+//folosit doar pentru rancher pentru a porni testcontainers
+tasks.withType(Test).configureEach {
     useJUnitPlatform()
+    systemProperty 'api.version', '1.44'
 }
