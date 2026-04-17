@@ -8,6 +8,7 @@ import static se.magnus.api.event.Event.Type.CREATE;
 import static se.magnus.api.event.Event.Type.DELETE;
 
 import java.util.function.Consumer;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,9 @@ import se.magnus.api.exceptions.InvalidInputException;
 import se.magnus.microservices.core.product.persistence.ProductRepository;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT,
-                properties = "spring.cloud.stream.enabled=false")
+  properties = {
+    "spring.cloud.stream.enabled=false",
+    "eureka.client.enabled=false" })
 class ProductServiceApplicationTests extends MongoDbTestBase {
 
   @Autowired
@@ -45,12 +48,12 @@ class ProductServiceApplicationTests extends MongoDbTestBase {
     int productId = 1;
 
     assertNull(repository.findByProductId(productId).block());
-    assertEquals(0, (long)repository.count().block());
+    assertEquals(0, (long) repository.count().block());
 
     sendCreateProductEvent(productId);
 
     assertNotNull(repository.findByProductId(productId).block());
-    assertEquals(1, (long)repository.count().block());
+    assertEquals(1, (long) repository.count().block());
 
     getAndVerifyProduct(productId, OK)
       .jsonPath("$.productId").isEqualTo(productId);
