@@ -40,6 +40,8 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
+      auth-server:
+        condition: service_healthy
 
   mongodb:
     image: mongo:8.0.5
@@ -76,7 +78,7 @@ services:
       - 5672:5672
       - 15672:15672
     healthcheck:
-      test: [ "CMD", "rabbitmqctl", "status" ]
+      test: ["CMD", "rabbitmqctl", "status"]
       interval: 5s
       timeout: 2s
       retries: 60
@@ -88,11 +90,21 @@ services:
   gateway:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-      - SERVER_SSL_BUNDLE_JKS_GATEWAY_KEYSTORE_LOCATION=file:/keystore/edge-test.p12
-      - SERVER_SSL_BUNDLE_JKS_GATEWAY_KEYSTORE_PASSWORD=testtest
-    volumes:
-      - $PWD/keystore:/keystore
     build: spring-cloud/gateway
     mem_limit: 512m
     ports:
       - "8443:8443"
+    depends_on:
+      auth-server:
+        condition: service_healthy
+
+  auth-server:
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    build: spring-cloud/authorization-server
+    mem_limit: 512m
+    healthcheck:
+      test: ["CMD", "wget", "-O -", "-q", "http://localhost:9999/actuator/health"]
+      interval: 5s
+      timeout: 2s
+      retries: 60
