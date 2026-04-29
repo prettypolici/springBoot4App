@@ -34,9 +34,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.cloud:spring-cloud-starter-stream-rabbit'
     implementation 'org.springframework.cloud:spring-cloud-starter-stream-kafka'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     implementation 'com.mysql:mysql-connector-j'
     implementation "org.mapstruct:mapstruct:${mapstructVersion}"
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
     compileOnly "org.mapstruct:mapstruct-processor:${mapstructVersion}"
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
@@ -61,13 +61,6 @@ dependencyManagement {
     }
 }
 
-//a se decomenta cand se foloseste docker desktop
-//tasks.named('test') {
-//    useJUnitPlatform()
-//}
-
-//folosit doar pentru rancher pentru a porni testcontainers
-tasks.withType(Test).configureEach {
+tasks.named('test') {
     useJUnitPlatform()
-    systemProperty 'api.version', '1.44'
 }

@@ -35,7 +35,6 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-stream-rabbit'
     implementation 'org.springframework.cloud:spring-cloud-starter-stream-kafka'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-
     implementation "org.mapstruct:mapstruct:${mapstructVersion}"
 
     compileOnly "org.mapstruct:mapstruct-processor:${mapstructVersion}"
@@ -62,12 +61,11 @@ dependencyManagement {
 }
 
 //a se decomenta cand se foloseste docker desktop
-//tasks.named('test') {
-//    useJUnitPlatform()
-//}
+tasks.named('test') {
+    useJUnitPlatform()
+}
 
 //folosit doar pentru rancher pentru a porni testcontainers
-tasks.withType(Test).configureEach {
-    useJUnitPlatform()
-    systemProperty 'api.version', '1.44'
-}
+//tasks.withType(Test).configureEach {
+//    useJUnitPlatform()
+//}

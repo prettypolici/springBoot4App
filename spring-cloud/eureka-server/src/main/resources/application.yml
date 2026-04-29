@@ -5,7 +5,6 @@ app:
   eureka-username: u
   eureka-password: p
 
-
 eureka:
   instance:
     hostname: localhost

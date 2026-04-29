@@ -6,7 +6,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
@@ -83,12 +82,12 @@ public class ProductCompositeServiceImpl implements ProductCompositeService {
 
     LOG.info("Will get composite product info for product.id={}", productId);
     return Mono.zip(
-        values -> createProductAggregate(
-          (SecurityContext) values[0], (Product) values[1], (List<Recommendation>) values[2], (List<Review>) values[3], serviceUtil.getServiceAddress()),
-        getSecurityContextMono(),
-        integration.getProduct(productId),
-        integration.getRecommendations(productId).collectList(),
-        integration.getReviews(productId).collectList())
+      values -> createProductAggregate(
+        (SecurityContext) values[0], (Product) values[1], (List<Recommendation>) values[2], (List<Review>) values[3], serviceUtil.getServiceAddress()),
+      getSecurityContextMono(),
+      integration.getProduct(productId),
+      integration.getRecommendations(productId).collectList(),
+      integration.getReviews(productId).collectList())
       .doOnError(ex -> LOG.warn("getCompositeProduct failed: {}", ex.toString()))
       .log(LOG.getName(), FINE);
   }
@@ -100,10 +99,10 @@ public class ProductCompositeServiceImpl implements ProductCompositeService {
       LOG.info("Will delete a product aggregate for product.id: {}", productId);
 
       return Mono.zip(r -> "",
-          getLogAuthorizationInfoMono(),
-          integration.deleteProduct(productId),
-          integration.deleteRecommendations(productId),
-          integration.deleteReviews(productId))
+        getLogAuthorizationInfoMono(),
+        integration.deleteProduct(productId),
+        integration.deleteRecommendations(productId),
+        integration.deleteReviews(productId))
         .doOnError(ex -> LOG.warn("delete failed: {}", ex.toString()))
         .log(LOG.getName(), FINE).then();
 
@@ -125,15 +124,15 @@ public class ProductCompositeServiceImpl implements ProductCompositeService {
 
     // 2. Copy summary recommendation info, if available
     List<RecommendationSummary> recommendationSummaries = (recommendations == null) ? null :
-      recommendations.stream()
-      .map(r -> new RecommendationSummary(r.getRecommendationId(), r.getAuthor(), r.getRate(), r.getContent()))
-      .collect(Collectors.toList());
+       recommendations.stream()
+        .map(r -> new RecommendationSummary(r.getRecommendationId(), r.getAuthor(), r.getRate(), r.getContent()))
+        .collect(Collectors.toList());
 
     // 3. Copy summary review info, if available
-    List<ReviewSummary> reviewSummaries = (reviews == null) ? null :
+    List<ReviewSummary> reviewSummaries = (reviews == null)  ? null :
       reviews.stream()
-      .map(r -> new ReviewSummary(r.getReviewId(), r.getAuthor(), r.getSubject(), r.getContent()))
-      .collect(Collectors.toList());
+        .map(r -> new ReviewSummary(r.getReviewId(), r.getAuthor(), r.getSubject(), r.getContent()))
+        .collect(Collectors.toList());
 
     // 4. Create info regarding the involved microservices addresses
     String productAddress = product.getServiceAddress();
@@ -154,7 +153,7 @@ public class ProductCompositeServiceImpl implements ProductCompositeService {
 
   private void logAuthorizationInfo(SecurityContext sc) {
     if (sc != null && sc.getAuthentication() != null && sc.getAuthentication() instanceof JwtAuthenticationToken) {
-      Jwt jwtToken = ((JwtAuthenticationToken) sc.getAuthentication()).getToken();
+      Jwt jwtToken = ((JwtAuthenticationToken)sc.getAuthentication()).getToken();
       logAuthorizationInfo(jwtToken);
     } else {
       LOG.warn("No JWT based Authentication supplied, running tests are we?");

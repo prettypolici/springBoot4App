@@ -14,13 +14,19 @@ import org.springframework.http.ResponseEntity;
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 class EurekaServerApplicationTests {
 
-  @Value("${app.eureka-usernameapp")
+  @Test
+  void contextLoads() {
+  }
+
+  @Value("${app.eureka-username}")
   private String username;
+
   @Value("${app.eureka-password}")
   private String password;
 
-  @Test
-  void contextLoads() {
+  @Autowired
+  void setTestRestTemplate(TestRestTemplate testRestTemplate) {
+    this.testRestTemplate = testRestTemplate.withBasicAuth(username, password);
   }
 
   private TestRestTemplate testRestTemplate;
@@ -40,11 +46,6 @@ class EurekaServerApplicationTests {
     ResponseEntity<String> entity = testRestTemplate.getForEntity("/actuator/health", String.class);
     assertEquals(HttpStatus.OK, entity.getStatusCode());
     assertEquals(expectedReponseBody, entity.getBody());
-  }
-
-  @Autowired
-  void setTestRestTemplate(TestRestTemplate testRestTemplate) {
-    this.testRestTemplate = testRestTemplate.withBasicAuth(username, password);
   }
 }
 

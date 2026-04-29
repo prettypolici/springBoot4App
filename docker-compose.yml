@@ -73,12 +73,20 @@ services:
 
   rabbitmq:
     image: rabbitmq:4.0.7-management
+    user: rabbitmq
+    hostname: rabbitmq
     mem_limit: 512m
     ports:
       - 5672:5672
       - 15672:15672
+    environment:
+      RABBITMQ_ERLANG_COOKIE: local-dev-cookie
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
     healthcheck:
-      test: ["CMD", "rabbitmqctl", "status"]
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
       interval: 5s
       timeout: 2s
       retries: 60
@@ -108,3 +116,6 @@ services:
       interval: 5s
       timeout: 2s
       retries: 60
+
+volumes:
+  rabbitmq_data:
