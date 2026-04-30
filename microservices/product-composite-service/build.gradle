@@ -53,6 +53,10 @@ dependencyManagement {
     }
 }
 
-tasks.named('test') {
+//tasks.named('test') {
+//    useJUnitPlatform()
+//}
+
+tasks.withType(Test).configureEach {
     useJUnitPlatform()
 }

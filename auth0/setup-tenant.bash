@@ -14,6 +14,8 @@ AT=$(curl -s --request POST \
   --header 'content-type: application/json' \
   --data "{\"client_id\":\"$MGM_CLIENT_ID\",\"client_secret\":\"$MGM_CLIENT_SECRET\",\"audience\":\"https://$TENANT/api/v2/\",\"grant_type\":\"client_credentials\"}" | jq -r .access_token)
 
+echo "Successfull call to Auth0 -> $AT"
+
 # Update the tenant
 echo "Update the tenant, set its default connection to a user dictionary..."
 curl -s -H "Authorization: Bearer $AT" -X PATCH  -H "Content-Type: application/json" -d '{"default_directory":"Username-Password-Authentication"}' https://$TENANT/api/v2/tenants/settings | jq .default_directory

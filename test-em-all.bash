@@ -184,9 +184,21 @@ fi
 
 waitForService curl -k https://$HOST:$PORT/actuator/health
 
-ACCESS_TOKEN=$(curl -k https://writer:secret-writer@$HOST:$PORT/oauth2/token -d grant_type=client_credentials -d scope="product:read product:write" -s | jq .access_token -r)
-echo ACCESS_TOKEN=$ACCESS_TOKEN
-AUTH="-H \"Authorization: Bearer $ACCESS_TOKEN\""
+# AICI GASESTI TOKEN PENTRU AUTH_SERVER LOCAL
+#ACCESS_TOKEN=$(curl -k https://writer:secret-writer@$HOST:$PORT/oauth2/token -d grant_type=client_credentials -d scope="product:read product:write" -s | jq .access_token -r)
+#echo ACCESS_TOKEN=$ACCESS_TOKEN
+#AUTH="-H \"Authorization: Bearer $ACCESS_TOKEN\""
+
+export TENANT=dev-e6e8cvoq6f3u4mze.uk.auth0.com
+export WRITER_CLIENT_ID=bAAZTOR7oER8ElrSaNuG10siYKPVQtDr
+export WRITER_CLIENT_SECRET=JKJpPUiyZakawjUAocmidk93M-COWLFlyI9pTz8RNWhvLxx0H0YPF4Aj82ROyaPQ
+
+ACCESS_TOKEN=$(curl -X POST https://$TENANT/oauth/token \
+  -d grant_type=client_credentials \
+  -d audience=https://localhost:8443/product-composite \
+  -d scope=product:read+product:write \
+  -d client_id=$WRITER_CLIENT_ID \
+  -d client_secret=$WRITER_CLIENT_SECRET -s | jq -r .access_token)
 
 # Verify access to Eureka and that all four microservices are registered in Eureka
 assertCurl 200 "curl -H "accept:application/json" -k https://u:p@$HOST:$PORT/eureka/api/apps -s"
@@ -230,9 +242,19 @@ assertEqual "\"Type mismatch.\"" "$(echo $RESPONSE | jq .message)"
 assertCurl 401 "curl -k https://$HOST:$PORT/product-composite/$PROD_ID_REVS_RECS -s"
 
 # Verify that the reader - client with only read scope can call the read API but not delete API.
-READER_ACCESS_TOKEN=$(curl -k https://reader:secret-reader@$HOST:$PORT/oauth2/token -d grant_type=client_credentials -d scope="product:read" -s | jq .access_token -r)
-echo READER_ACCESS_TOKEN=$READER_ACCESS_TOKEN
-READER_AUTH="-H \"Authorization: Bearer $READER_ACCESS_TOKEN\""
+# AICI CONFIG PENTRU LUAREA TOKEN DIN AUTH SERVER LOCAL
+#READER_ACCESS_TOKEN=$(curl -k https://reader:secret-reader@$HOST:$PORT/oauth2/token -d grant_type=client_credentials -d scope="product:read" -s | jq .access_token -r)
+#echo READER_ACCESS_TOKEN=$READER_ACCESS_TOKEN
+#READER_AUTH="-H \"Authorization: Bearer $READER_ACCESS_TOKEN\""
+
+export READER_CLIENT_ID=r6NTB3bPwv9ey2ge3wX2Ol8UWGGBlY15
+export READER_CLIENT_SECRET=BPx8ieeXjnSPwQd-paK1wMJs-T6T5ze4MRV0OqCUkWCmvCkDPwQ01UFHk47F0Tss
+READER_ACCESS_TOKEN=$(curl -X POST https://$TENANT/oauth/token \
+  -d grant_type=client_credentials \
+  -d audience=https://localhost:8443/product-composite \
+  -d scope=product:read \
+  -d client_id=$READER_CLIENT_ID \
+  -d client_secret=$READER_CLIENT_SECRET -s | jq -r .access_token)
 
 assertCurl 200 "curl $READER_AUTH -k https://$HOST:$PORT/product-composite/$PROD_ID_REVS_RECS -s"
 assertCurl 403 "curl -X DELETE $READER_AUTH -k https://$HOST:$PORT/product-composite/$PROD_ID_REVS_RECS -s"

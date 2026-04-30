@@ -85,6 +85,7 @@ app:
   eureka-password: p
   eureka-server: localhost
   auth-server: localhost
+  auth-server-extern: dev-e6e8cvoq6f3u4mze.uk.auth0.com
 
 eureka:
   client:
@@ -123,7 +124,8 @@ spring.rabbitmq:
   username: guest
   password: guest
 
-spring.security.oauth2.resourceserver.jwt.issuer-uri: http://${app.auth-server}:9999
+#spring.security.oauth2.resourceserver.jwt.issuer-uri: http://${app.auth-server}:9999
+spring.security.oauth2.resourceserver.jwt.issuer-uri: https://${app.auth-server-extern}/
 
 logging:
   level:
@@ -141,6 +143,7 @@ server.port: 8080
 app:
   eureka-server: eureka
   auth-server: auth-server
+  auth-server-extern: dev-e6e8cvoq6f3u4mze.uk.auth0.com
 
 spring.rabbitmq.host: rabbitmq
 
