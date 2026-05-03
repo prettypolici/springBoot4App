@@ -8,7 +8,6 @@ import static se.magnus.api.event.Event.Type.CREATE;
 import static se.magnus.api.event.Event.Type.DELETE;
 
 import java.util.function.Consumer;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +20,7 @@ import se.magnus.api.event.Event;
 import se.magnus.api.exceptions.InvalidInputException;
 import se.magnus.microservices.core.recommendation.persistence.RecommendationRepository;
 
-@SpringBootTest(webEnvironment = RANDOM_PORT,
-  properties = {"spring.cloud.stream.enabled=false",
-    "eureka.client.enabled=false"
-  })
+@SpringBootTest(webEnvironment = RANDOM_PORT, properties = {"eureka.client.enabled=false"})
 class RecommendationServiceApplicationTests extends MongoDbTestBase {
 
   @Autowired
@@ -51,7 +47,7 @@ class RecommendationServiceApplicationTests extends MongoDbTestBase {
     sendCreateRecommendationEvent(productId, 2);
     sendCreateRecommendationEvent(productId, 3);
 
-    assertEquals(3, (long) repository.findByProductId(productId).count().block());
+    assertEquals(3, (long)repository.findByProductId(productId).count().block());
 
     getAndVerifyRecommendationsByProductId(productId, OK)
       .jsonPath("$.length()").isEqualTo(3)
@@ -67,7 +63,7 @@ class RecommendationServiceApplicationTests extends MongoDbTestBase {
 
     sendCreateRecommendationEvent(productId, recommendationId);
 
-    assertEquals(1, (long) repository.count().block());
+    assertEquals(1, (long)repository.count().block());
 
     InvalidInputException thrown = assertThrows(
       InvalidInputException.class,
@@ -75,7 +71,7 @@ class RecommendationServiceApplicationTests extends MongoDbTestBase {
       "Expected a InvalidInputException here!");
     assertEquals("Duplicate key, Product Id: 1, Recommendation Id:1", thrown.getMessage());
 
-    assertEquals(1, (long) repository.count().block());
+    assertEquals(1, (long)repository.count().block());
   }
 
   @Test
@@ -85,10 +81,10 @@ class RecommendationServiceApplicationTests extends MongoDbTestBase {
     int recommendationId = 1;
 
     sendCreateRecommendationEvent(productId, recommendationId);
-    assertEquals(1, (long) repository.findByProductId(productId).count().block());
+    assertEquals(1, (long)repository.findByProductId(productId).count().block());
 
     sendDeleteRecommendationEvent(productId);
-    assertEquals(0, (long) repository.findByProductId(productId).count().block());
+    assertEquals(0, (long)repository.findByProductId(productId).count().block());
 
     sendDeleteRecommendationEvent(productId);
   }

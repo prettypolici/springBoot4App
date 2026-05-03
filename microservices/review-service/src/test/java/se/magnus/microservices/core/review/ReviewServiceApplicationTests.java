@@ -8,7 +8,6 @@ import static se.magnus.api.event.Event.Type.CREATE;
 import static se.magnus.api.event.Event.Type.DELETE;
 
 import java.util.function.Consumer;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ import se.magnus.microservices.core.review.persistence.ReviewRepository;
 @SpringBootTest(webEnvironment = RANDOM_PORT, properties = {
   "spring.cloud.stream.defaultBinder=rabbit",
   "logging.level.se.magnus=DEBUG",
-  "eureka.client.enabled=false" })
+  "eureka.client.enabled=false"})
 class ReviewServiceApplicationTests extends MySqlTestBase {
 
   @Autowired

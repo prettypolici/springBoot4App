@@ -1,0 +1,299 @@
+{
+	"info": {
+		"_postman_id": "7d92501a-bc40-4611-959b-c27a264ce3e8",
+		"name": "SpringBootApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6727318"
+	},
+	"item": [
+		{
+			"name": "tokenWriterClientGrantFlow",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "audience",
+							"value": "https://localhost:8443/product-composite",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "product:read product:write",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{WRITER_CLIENT_ID}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{WRITER_CLIENT_SECRET}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{TENANT}}/oauth/token",
+					"protocol": "https",
+					"host": [
+						"{{TENANT}}"
+					],
+					"path": [
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "tokenWithAuthorizationCode",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "authorization_code",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{WRITER_CLIENT_ID}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{WRITER_CLIENT_SECRET}}",
+							"type": "text"
+						},
+						{
+							"key": "code",
+							"value": "scUP0P9TYfEoevH6yZmy_K4MYwZpfq2NRJZfgUB-q7b0X",
+							"type": "text"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "https://my.redirect.uri",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{TENANT}}/oauth/token?audience=https://localhost:8443/product-composite&scope=openid email product:read product:write&response_type=code&client_id=${WRITER_CLIENT_ID}&redirect_uri=https://my.redirect.uri&state=845361",
+					"protocol": "https",
+					"host": [
+						"{{TENANT}}"
+					],
+					"path": [
+						"oauth",
+						"token"
+					],
+					"query": [
+						{
+							"key": "audience",
+							"value": "https://localhost:8443/product-composite"
+						},
+						{
+							"key": "scope",
+							"value": "openid email product:read product:write"
+						},
+						{
+							"key": "response_type",
+							"value": "code"
+						},
+						{
+							"key": "client_id",
+							"value": "${WRITER_CLIENT_ID}"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "https://my.redirect.uri"
+						},
+						{
+							"key": "state",
+							"value": "845361"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "userInfoAuth",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "authorization_code",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{WRITER_CLIENT_ID}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{WRITER_CLIENT_SECRET}}",
+							"type": "text"
+						},
+						{
+							"key": "code",
+							"value": "scUP0P9TYfEoevH6yZmy_K4MYwZpfq2NRJZfgUB-q7b0X",
+							"type": "text"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "https://my.redirect.uri",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{TENANT}}/oauth/token?audience=https://localhost:8443/product-composite&scope=openid email product:read product:write&response_type=code&client_id=${WRITER_CLIENT_ID}&redirect_uri=https://my.redirect.uri&state=845361",
+					"protocol": "https",
+					"host": [
+						"{{TENANT}}"
+					],
+					"path": [
+						"oauth",
+						"token"
+					],
+					"query": [
+						{
+							"key": "audience",
+							"value": "https://localhost:8443/product-composite"
+						},
+						{
+							"key": "scope",
+							"value": "openid email product:read product:write"
+						},
+						{
+							"key": "response_type",
+							"value": "code"
+						},
+						{
+							"key": "client_id",
+							"value": "${WRITER_CLIENT_ID}"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "https://my.redirect.uri"
+						},
+						{
+							"key": "state",
+							"value": "845361"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProductComposite",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImZJcGhualQ2Sy1KZjI4ZGVBa1NxeiJ9.eyJpc3MiOiJodHRwczovL2Rldi1lNmU4Y3ZvcTZmM3U0bXplLnVrLmF1dGgwLmNvbS8iLCJzdWIiOiJiQUFaVE9SN29FUjhFbHJTYU51RzEwc2lZS1BWUXREckBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6ODQ0My9wcm9kdWN0LWNvbXBvc2l0ZSIsImlhdCI6MTc3Nzc5MzA4MCwiZXhwIjoxNzc3ODc5NDgwLCJzY29wZSI6InByb2R1Y3Q6cmVhZCBwcm9kdWN0OndyaXRlIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIiwiYXpwIjoiYkFBWlRPUjdvRVI4RWxyU2FOdUcxMHNpWUtQVlF0RHIifQ.zv2CdnDJvlki9SWkDGSHZAZwDYMA11Yg5V6GZJ4dzqfHzSOTeegxznIWOMJVykogCE-RG_Rv9m4yywbsAWtfvCs5BFQxVH8Yqs6q0aTsJpl3vWINuN4YfIFE0kYMjYRcWStCo_6aUvDeNUBTYpX6N1zZoSUdDBPlYPcu88xnZGQiMxWRLInkrI2Gqz744sJd6sSxgK45w_RFnRTRYilps2X4yrp63rDJpThyF_ykPcmZnUSJxZshdSezCovpVhiEnQjcyJtW__kxgHiA4weHxNhzFeToks46upME9bjIPAxomfhbMy-DAnsmAMN9ARH7fxbsQIbWF5tb_PngU-Girg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:8443/product-composite/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"product-composite",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteAProductComposite",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImZJcGhualQ2Sy1KZjI4ZGVBa1NxeiJ9.eyJpc3MiOiJodHRwczovL2Rldi1lNmU4Y3ZvcTZmM3U0bXplLnVrLmF1dGgwLmNvbS8iLCJzdWIiOiJiQUFaVE9SN29FUjhFbHJTYU51RzEwc2lZS1BWUXREckBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6ODQ0My9wcm9kdWN0LWNvbXBvc2l0ZSIsImlhdCI6MTc3Nzc5MzA4MCwiZXhwIjoxNzc3ODc5NDgwLCJzY29wZSI6InByb2R1Y3Q6cmVhZCBwcm9kdWN0OndyaXRlIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIiwiYXpwIjoiYkFBWlRPUjdvRVI4RWxyU2FOdUcxMHNpWUtQVlF0RHIifQ.zv2CdnDJvlki9SWkDGSHZAZwDYMA11Yg5V6GZJ4dzqfHzSOTeegxznIWOMJVykogCE-RG_Rv9m4yywbsAWtfvCs5BFQxVH8Yqs6q0aTsJpl3vWINuN4YfIFE0kYMjYRcWStCo_6aUvDeNUBTYpX6N1zZoSUdDBPlYPcu88xnZGQiMxWRLInkrI2Gqz744sJd6sSxgK45w_RFnRTRYilps2X4yrp63rDJpThyF_ykPcmZnUSJxZshdSezCovpVhiEnQjcyJtW__kxgHiA4weHxNhzFeToks46upME9bjIPAxomfhbMy-DAnsmAMN9ARH7fxbsQIbWF5tb_PngU-Girg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:8443/product-composite/9",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"product-composite",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postAproductComposite",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImZJcGhualQ2Sy1KZjI4ZGVBa1NxeiJ9.eyJpc3MiOiJodHRwczovL2Rldi1lNmU4Y3ZvcTZmM3U0bXplLnVrLmF1dGgwLmNvbS8iLCJzdWIiOiJiQUFaVE9SN29FUjhFbHJTYU51RzEwc2lZS1BWUXREckBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6ODQ0My9wcm9kdWN0LWNvbXBvc2l0ZSIsImlhdCI6MTc3Nzc5MzA4MCwiZXhwIjoxNzc3ODc5NDgwLCJzY29wZSI6InByb2R1Y3Q6cmVhZCBwcm9kdWN0OndyaXRlIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIiwiYXpwIjoiYkFBWlRPUjdvRVI4RWxyU2FOdUcxMHNpWUtQVlF0RHIifQ.zv2CdnDJvlki9SWkDGSHZAZwDYMA11Yg5V6GZJ4dzqfHzSOTeegxznIWOMJVykogCE-RG_Rv9m4yywbsAWtfvCs5BFQxVH8Yqs6q0aTsJpl3vWINuN4YfIFE0kYMjYRcWStCo_6aUvDeNUBTYpX6N1zZoSUdDBPlYPcu88xnZGQiMxWRLInkrI2Gqz744sJd6sSxgK45w_RFnRTRYilps2X4yrp63rDJpThyF_ykPcmZnUSJxZshdSezCovpVhiEnQjcyJtW__kxgHiA4weHxNhzFeToks46upME9bjIPAxomfhbMy-DAnsmAMN9ARH7fxbsQIbWF5tb_PngU-Girg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:8443/product-composite/9",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"product-composite",
+						"9"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
