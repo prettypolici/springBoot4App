@@ -41,20 +41,22 @@ spring.cloud.gateway.server.webflux.routes:
   predicates:
   - Path=/product-composite/**
 
-- id: oauth2-server
-  uri: lb://auth-server
-  predicates:
-  - Path=/oauth2/**
+# rutele comenetate sunt rutele folosite pentru sercerul auth local
 
-- id: oauth2-login
-  uri: lb://auth-server
-  predicates:
-  - Path=/login/**
-
-- id: oauth2-error
-  uri: lb://auth-server
-  predicates:
-  - Path=/error/**
+#- id: oauth2-server
+#  uri: lb://auth-server
+#  predicates:
+#  - Path=/oauth2/**
+#
+#- id: oauth2-login
+#  uri: lb://auth-server
+#  predicates:
+#  - Path=/login/**
+#
+#- id: oauth2-error
+#  uri: lb://auth-server
+#  predicates:
+#  - Path=/error/**
 
 - id: product-composite-swagger-ui
   uri: lb://product-composite
@@ -104,7 +106,7 @@ spring.cloud.gateway.server.webflux.routes:
   - SetPath=/501
 
 #spring.security.oauth2.resourceserver.jwt.issuer-uri: http://${app.auth-server}:9999
-spring.security.oauth2.resourceserver.jwt.issuer-uri: http://${app.auth-server-external}/
+spring.security.oauth2.resourceserver.jwt.issuer-uri: https://${app.auth-server-external}/
 
 management.endpoint.gateway.access: unrestricted
 management.endpoint.health.show-details: "ALWAYS"
