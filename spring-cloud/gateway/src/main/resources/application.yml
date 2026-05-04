@@ -105,6 +105,13 @@ spring.cloud.gateway.server.webflux.routes:
   filters:
   - SetPath=/501
 
+- id: configserver
+  uri: ${spring.cloud.config.uri}
+  predicates:
+    - Path=/config/**
+  filters:
+    - RewritePath=/config/(?<segment>.*), /$\{segment}
+
 #spring.security.oauth2.resourceserver.jwt.issuer-uri: http://${app.auth-server}:9999
 spring.security.oauth2.resourceserver.jwt.issuer-uri: https://${app.auth-server-external}/
 
