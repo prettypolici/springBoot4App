@@ -177,9 +177,9 @@ if [[ $@ == *"start"* ]]
 then
   echo "Restarting the test environment..."
   echo "$ podman compose down -v --remove-orphans"
-  docker compose down -v --remove-orphans
+  podman compose down -v --remove-orphans
   echo "$ podman compose up -d"
-  docker compose up -d
+  podman compose up -d
 fi
 
 waitForService curl -k https://$HOST:$PORT/actuator/health

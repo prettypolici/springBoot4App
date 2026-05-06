@@ -6,6 +6,8 @@ management.endpoints.web.exposure.include: "*"
 logging:
   level:
     root: info
+
 ---
+
 spring.config.activate.on-profile: docker
 spring.cloud.config.server.native.searchLocations: file:/config-repo

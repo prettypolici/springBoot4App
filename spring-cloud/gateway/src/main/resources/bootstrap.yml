@@ -1,5 +1,4 @@
-spring.application.name: product
-
+spring.application.name: gateway
 spring.cloud.config:
   failFast: true
   retry:
@@ -13,4 +12,5 @@ spring.cloud.config:
 
 ---
 spring.config.activate.on-profile: docker
+
 spring.cloud.config.uri: http://configserver:8888

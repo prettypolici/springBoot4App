@@ -1,4 +1,4 @@
-spring.application.name: product
+spring.application.name: eureka-server
 
 spring.cloud.config:
   failFast: true
@@ -13,4 +13,5 @@ spring.cloud.config:
 
 ---
 spring.config.activate.on-profile: docker
+
 spring.cloud.config.uri: http://configserver:8888
