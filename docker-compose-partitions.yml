@@ -142,7 +142,7 @@ services:
       timeout: 2s
       retries: 60
 
-  config-server:
+  configserver:
     build: spring-cloud/configserver
     mem_limit: 512m
     environment:
