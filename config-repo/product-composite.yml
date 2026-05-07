@@ -96,7 +96,7 @@ spring.cloud.stream:
         required-groups: auditGroup
 
 #spring.security.oauth2.resourceserver.jwt.issuer-uri: http://${app.auth-server}:9999
-spring.security.oauth2.resourceserver.jwt.issuer-uri: https://${app.auth-server-extern}/
+spring.security.oauth2.resourceserver.jwt.issuer-uri: https://${app.auth-server-external}/
 
 logging:
   level:
