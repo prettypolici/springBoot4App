@@ -28,6 +28,7 @@ import se.magnus.microservices.composite.product.services.ProductCompositeIntegr
   properties = {
     "spring.security.oauth2.resourceserver.jwt.issuer-uri=",
     "spring.main.allow-bean-definition-overriding=true",
+    "spring.cloud.config.enabled=false",
     "eureka.client.enabled=false"})
 class ProductCompositeServiceApplicationTests {
 
